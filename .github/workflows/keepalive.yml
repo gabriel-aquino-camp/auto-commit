@@ -1,0 +1,24 @@
+name: Keep Alive Commit
+
+on:
+  schedule:
+    - cron: "0 12 * * *" # todo dia meio-dia
+  workflow_dispatch: # permite rodar manual também
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update keep-alive file
+        run: echo "Último commit: $(date)" > keep-alive.txt
+
+      - name: Commit and push
+        run: |
+          git config --global user.name "SeuNomeNoGitHub"
+          git config --global user.email "seu-email-publico-no-github"
+          git add keep-alive.txt
+          git commit -m "auto-commit: $(date)" || echo "Nada para commitar"
+          git push https://$GITHUB_ACTOR:${{ secrets.PAT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git
