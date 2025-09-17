@@ -2,7 +2,7 @@ name: Keep Alive Commit
 
 on:
   schedule:
-    - cron: "0 12 * * *" # todo dia meio-dia
+    - cron: "*/1 * * * *" # a cada 1 minuto
   workflow_dispatch: # permite rodar manual também
 
 jobs:
