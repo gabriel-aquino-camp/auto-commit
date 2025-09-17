@@ -2,7 +2,7 @@ name: Keep Alive Commit
 
 on:
   schedule:
-    - cron: "*/1 * * * *" # a cada 1 minuto
+    - cron: "*/1 * * * *" # a cada 1 minuto (mas GitHub pode limitar a 5 min)
   workflow_dispatch: # permite rodar manual também
 
 jobs:
@@ -13,7 +13,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Update keep-alive file
-        run: echo "Último commit: $(date)" > keep-alive.txt
+        run: |
+          echo "Último commit: $(date)" > keep-alive.txt
 
       - name: Commit and push
         run: |
@@ -22,3 +23,4 @@ jobs:
           git add keep-alive.txt
           git commit -m "auto-commit: $(date)" || echo "Nada para commitar"
           git push https://$GITHUB_ACTOR:${{ secrets.PAT_TOKEN }}@github.com/$GITHUB_REPOSITORY.git
+
