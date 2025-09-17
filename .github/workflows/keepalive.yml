@@ -23,5 +23,3 @@ jobs:
           git add keep-alive.txt
           git commit -m "auto-commit: $(date)" || echo "Nada para commitar"
           git push https://gabriel-aquino-camp:${{ secrets.PAT_TOKEN }}@github.com/gabriel-aquino-camp/auto-commit.git
-
-
